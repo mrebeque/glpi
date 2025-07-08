@@ -1,0 +1,19 @@
+# Imagem base oficial da Canonical com MySQL
+FROM ubuntu/mysql:latest
+
+# Define a timezone correta para o Brasil
+ENV TZ=America/Sao_Paulo
+
+# Atualiza timezone do sistema
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone
+
+# Expondo a porta padrão do MySQL
+EXPOSE 3306
+
+# Variáveis de ambiente padrão (podem ser sobrescritas no docker-compose)
+ENV MYSQL_ROOT_PASSWORD=root
+ENV MYSQL_DATABASE=glpi
+ENV MYSQL_USER=glpi
+ENV MYSQL_PASSWORD=glpi123
+
