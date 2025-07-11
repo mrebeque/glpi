@@ -5,11 +5,11 @@ echo "Criando a imagem 'glpi-mysql:8:0'..."
 docker build -f Dockerfile-mysql  --format=docker -t glpi-mysql:8.0 .
 
 if docker container ls | grep -q "glpi-mysql"; then
-   docker contatiner stop glpi-mysql && \
+   docker container stop glpi-mysql && \
       docker container rm glpi-mysql
 else
    if docker container ls -a | grep -q "glpi-mysql"; then
-      docker contatiner stop glpi-mysql && \
+      docker container stop glpi-mysql && \
          docker container rm glpi-mysql
    fi
 fi

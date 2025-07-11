@@ -1,24 +1,26 @@
 #!/bin/bash
 #
 echo "Criando a imagem 'glpi-apache-php82'..."
-docker build -f Dockerfile-glpi -t glpi-apache2-php82:1.0 .
+docker build -f Dockerfile-glpi --no-cache  -t glpi-apache2-php82:1.0 .
 
-if docker container ls | grep -q "glpi-web"; then
-   docker contatiner stop glpi_web
-   docker container rm glpi_web
+if docker container ls | grep glpi-web; then
+   docker container stop glpi-web
+   docker container rm glpi-web
 else
-   if docker container ls -a | grep -q "glpi-web"; then
-      docker contatiner stop glpi-web
+   if docker container ls -a | grep glpi-web; then
+      docker container stop glpi-web
       docker container rm glpi-web
    fi
 fi
 docker run -d \
+  --rm
   -p 8081:80 \
-  --rm \
   --name glpi-web \
   --network glpi-net \
   -v glpi_html:/var/www/html \
 glpi-apache2-php82:1.0
+
+docker logs glpi-web
 
 
 
